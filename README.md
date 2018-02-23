@@ -1,4 +1,4 @@
-# 0.01.SRC.tictactoe-demo
+# 0.01.src.tictactoe-demo
 Milestone 0 Version 01 Source Code Tic Tac Toe Demo
 
 Server runs on my vm. Address to vm is dynamically linked.
