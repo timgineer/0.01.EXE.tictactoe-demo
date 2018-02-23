@@ -10,6 +10,7 @@ java -jar [diretory/to/]clienttictactoe01.jar [servername]
 1) ensure gif files are in same directory as client jar file
 2) ensure java is latest version
 3) ensure (talk to me) server is running
+4) once there are two clients the game starts
 
 
 
