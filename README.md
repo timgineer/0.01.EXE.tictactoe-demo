@@ -13,5 +13,5 @@ java -jar [diretory/to/]clienttictactoe01.jar [servername]
 4) once there are two clients the game starts
 5) ensure you have/know the port number
 
-
+Adding messaging second swing window opens.
 
