@@ -41,27 +41,29 @@ import javax.swing.JPanel;
  */
 public class ClientTicTacToe {
 
-    private JFrame frame = new JFrame("Tic Tac Toe");
-    private JLabel messageLabel = new JLabel("");
+    private final JFrame frame = new JFrame("Tic Tac Toe");
+    private final JLabel messageLabel = new JLabel("");
     private ImageIcon icon;
     private ImageIcon opponentIcon;
 
     private Square[] board = new Square[9];
     private Square currentSquare;
 
-    private static int PORT = 8901;
-    private Socket socket;
-    private BufferedReader in;
+    private final Socket socket;
+    private final BufferedReader in;
     private PrintWriter out;
 
     /**
      * Constructs the client by connecting to a server, laying out the
      * GUI and registering GUI listeners.
+     * @param serverAddress
+     * @param port
+     * @throws java.lang.Exception
      */
-    public ClientTicTacToe(String serverAddress) throws Exception {
+    public ClientTicTacToe(String serverAddress, int port) throws Exception {
 
         // Setup networking
-        socket = new Socket(serverAddress, PORT);
+        socket = new Socket(serverAddress, port);
         in = new BufferedReader(new InputStreamReader(
             socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
@@ -77,6 +79,7 @@ public class ClientTicTacToe {
             final int j = i;
             board[i] = new Square();
             board[i].addMouseListener(new MouseAdapter() {
+                @Override
                 public void mousePressed(MouseEvent e) {
                     currentSquare = board[j];
                     out.println("MOVE " + j);}});
@@ -95,7 +98,7 @@ public class ClientTicTacToe {
      * "DEFEAT" and "TIE" ask the user whether or not to play
      * another game.  If the answer is no, the loop is exited and
      * the server is sent a "QUIT" message.  If an OPPONENT_QUIT
-     * message is recevied then the loop will exit and the server
+     * message is received then the loop will exit and the server
      * will be sent a "QUIT" message also.
      */
     public void play() throws Exception {
@@ -172,7 +175,8 @@ public class ClientTicTacToe {
     public static void main(String[] args) throws Exception {
         while (true) {
             String serverAddress = (args.length == 0) ? "localhost" : args[0];
-            ClientTicTacToe client = new ClientTicTacToe(serverAddress);
+            int port = (args.length <= 1) ? 8901 : Integer.parseInt(args[1]);
+            ClientTicTacToe client = new ClientTicTacToe(serverAddress, port);
             client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             client.frame.setSize(240, 160);
             client.frame.setVisible(true);
